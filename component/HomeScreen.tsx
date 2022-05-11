@@ -9,16 +9,19 @@ import {
   Image,
   I18nManager,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../src/i18n';
 import {useTranslation} from 'react-i18next';
 import RNRestart from 'react-native-restart';
 import * as RNLocalize from 'react-native-localize';
 import CustomButton from './common/CustomButton';
 import Typography from './common/Typography';
+import CustomTextInput from './common/CustomTextInput';
 
 const HomeScreen: React.FC = () => {
   console.log(RNLocalize.getLocales());
+
+  const [input, setInput] = useState('');
 
   useEffect(() => {
     // RNRestart.Restart()
@@ -107,7 +110,15 @@ const HomeScreen: React.FC = () => {
       </View>
       <View style={myStyles.inputWrapper}>
         <Typography children={t('TextInput test')} />
-        <TextInput style={myStyles.input} placeholder={t('Input')} />
+        <CustomTextInput
+          value={input}
+          placeholder="user"
+          onChangeText={value => {
+            setInput(value);
+          }}
+          keyboardType="default"
+        />
+        <Text>{input}</Text>
       </View>
       <View style={{marginTop: 50}}>
         <FlatList
