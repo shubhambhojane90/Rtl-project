@@ -2,19 +2,21 @@ import {
     KeyboardTypeOptions,
     StyleProp,
     StyleSheet,
-    Text,
     TextStyle,
-    TextInput,
-    View,
     ViewStyle,
     ReturnKeyTypeOptions,
     NativeSyntheticEvent,
     TextInputFocusEventData,
+    I18nManager,
   } from 'react-native';
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import { moderateScale } from 'react-native-size-matters';
+import { TextInput } from 'react-native-paper';
+import COLORS from '../../constant/color';
 
 
+// react native paper
+// left icon and right icon
 interface Props {
     placeholder?: string;
     placeholderTextColor?: string;
@@ -45,17 +47,19 @@ interface Props {
     maxLength?: number | undefined;
     onEndEditing?: any;
     color?: any;
-    icon?: React.ReactNode;
+    rightIcon?: React.ReactNode;
+    leftIcon?: React.ReactNode;
     onFocus?: ((e: NativeSyntheticEvent<TextInputFocusEventData>) => void) | undefined;
     isTopText?: boolean;
   }
 
 const CustomTextInput : FC<Props> = ({
     placeholder,
-    placeholderTextColor = 'grey',
+    placeholderTextColor = COLORS.gray,
     value,
     setName,
     textTransform,
+    underlineColorAndroid,
     autoFocus,
     keyboardType,
     textContentType,
@@ -72,17 +76,18 @@ const CustomTextInput : FC<Props> = ({
     onSubmitEditing,
     multiline,
     errorText,
-    secureTextEntry = false,
-    autoCapitalize = 'none',
+    secureTextEntry,
+    autoCapitalize,
     maxLength,
     onEndEditing,
     color,
-    icon,
+    rightIcon,
+    leftIcon,
     onFocus,
     ...inputProps
 }) => {
 
-
+// handle rtl layout
   return (
     <>
       <TextInput
@@ -93,12 +98,15 @@ const CustomTextInput : FC<Props> = ({
         autoFocus={autoFocus}
         keyboardType={keyboardType}
         textContentType={textContentType}
+        underlineColorAndroid={underlineColorAndroid}
         textAlign={textAlign}
         textAlignVertical={textAlignVertical}
         autoCorrect={autoCorrect}
         returnKeyType={returnKeyType}
         secureTextEntry={secureTextEntry}
         autoCapitalize={autoCapitalize}
+        right={<TextInput.Icon name={rightIcon} />}
+        left={<TextInput.Icon name={leftIcon} />}
         maxLength={maxLength}
         onChangeText={Name => {
             if (onChangeText) {
@@ -123,22 +131,23 @@ const myStyles = StyleSheet.create({
 
     textInputStyle: {
         marginVertical: moderateScale(10, 0.3),
-        color: "black",
-        width: '56%',
+        color: COLORS.black, 
+        width: moderateScale(200,0.4),
         height: moderateScale(60, 0.3),
         fontSize: moderateScale(16, 0.3),
-        backgroundColor: "white",
+        backgroundColor: COLORS.white,
         paddingHorizontal: moderateScale(10, 0.3),
         paddingVertical: moderateScale(7, 0.3),
         borderRadius: moderateScale(10, 0.3),
-        shadowColor: "black",
+        shadowColor: COLORS.black,
         shadowOffset: {
-          width: 0,
+          width: moderateScale(0,0),
           height: moderateScale(10, 0.3),
         },
         shadowOpacity: 0.25,
         shadowRadius: 8.84,
         elevation: 2,
+        textAlign :  I18nManager.isRTL ? 'right' : 'left',
       },
 })
 

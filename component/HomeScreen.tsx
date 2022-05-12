@@ -112,15 +112,18 @@ const HomeScreen: React.FC = () => {
         <Typography children={t('TextInput test')} />
         <CustomTextInput
           value={input}
-          placeholder="user"
+          placeholder={t("Input")}
           onChangeText={value => {
             setInput(value);
           }}
+          onSubmitEditing={() => setInput('')}
           keyboardType="default"
+          rightIcon="eye"
+          leftIcon="apps"
         />
-        <Text>{input}</Text>
+        {/* <Text>{input}</Text> */}
       </View>
-      <View style={{marginTop: 50}}>
+      <View style={{marginTop: 10}}>
         <FlatList
           data={data}
           keyExtractor={item => item.id}
@@ -178,9 +181,9 @@ const myStyles = StyleSheet.create({
 
   inputWrapper: {
     marginVertical: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
+    flexDirection: 'column',
+    // alignItems: 'center',
+    // justifyContent: 'space-around',
   },
   input: {
     width: '50%',
